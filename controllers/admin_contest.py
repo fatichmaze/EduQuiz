@@ -96,8 +96,8 @@ def buat_contest():
     # Input jumlah quiz yang ingin dimasukkan
     while True:
         try:
-            jumlah = int(input("Berapa banyak quiz yang ingin dimasukkan ke contest ini? "))
-            if jumlah <= 0 or jumlah > len(quizzes):
+            jumlah_quiz = int(input("Jumlah quiz yang akan dimasukkan ke contest: "))
+            if jumlah_quiz <= 0 or jumlah_quiz > len(quizzes):
                 print(f"Jumlah harus antara 1 sampai {len(quizzes)}.")
             else:
                 break
@@ -109,7 +109,7 @@ def buat_contest():
         print(f"{i}. {q['Id']} - {q['Judul']}")
 
     ids = []
-    for n in range(jumlah):
+    for n in range(jumlah_quiz):
         while True:
             try:
                 pilih = int(input(f"Pilih quiz ke-{n+1}: ")) - 1
@@ -137,7 +137,7 @@ def lihat_contest():
         teks_quiz = ""
         for qid in c["Quiz_Ids"]:
             teks_quiz += qid + ", "
-        teks_quiz = teks_quiz[:-2]  # hapus koma terakhir
+        teks_quiz = teks_quiz[:-2]
         print(f"{i}. {c['Nama']} → Quiz: {teks_quiz}")
     print()
 
