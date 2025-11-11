@@ -1,8 +1,25 @@
 from utils import load_data, save_data, CONTEST_FILE, QUIZ_FILE
+from quiz_project import quiz_saintek
+import os
 
+#BUAT QUIZ
 def buat_quiz():
     quizzes = load_data(QUIZ_FILE, [])
-    quiz_id = input("Masukkan ID Quiz (misal: Q1): ")
+
+    #Cegah ID duplikat
+    while True:
+        quiz_id = input("Masukkan ID Quiz (misal: Q1): ")
+        id_sama = False
+        for q in quizzes:
+            if q["Id"] == quiz_id:
+                id_sama = True
+                break
+
+        if id_sama:
+            print("❌ ID Quiz sudah ada! Silahkan buat ID yang lain.")
+        else:
+            break
+
     judul = input("Masukkan Judul Quiz: ")
 
     questions = []
@@ -18,40 +35,54 @@ def buat_quiz():
     save_data(QUIZ_FILE, quizzes)
     print("✅ Quiz berhasil dibuat!\n")
 
+#EDIT QUIZ
 def edit_quiz():
     quizzes = load_data(QUIZ_FILE, [])
     if not quizzes:
         print("Belum ada quiz.")
         return
 
+    print("\n=== Daftar Quiz ===")
     for i, q in enumerate(quizzes, start=1):
-        print(f"{i}. {q['id']} - {q['pertanyaan']}")
+        print(f"{i}. {q['Id']} - {q['Judul']}")
     pilih = int(input("Pilih quiz yang ingin diedit: ")) - 1
 
-    pertanyaan = input("Pertanyaan baru: ")
-    jawaban = input("Jawaban baru: ")
+    judul_baru = input("Masukkan judul baru (biarkan kosong jika tidak diubah): ")
+    if judul_baru != "":
+        quizzes[pilih]["Judul"] = judul_baru
 
-    quizzes[pilih]["pertanyaan"] = pertanyaan
-    quizzes[pilih]["jawaban"] = jawaban
+    print("\nMasukkan pertanyaan baru:")
+    questions = []
+    while True:
+        pertanyaan = input("Masukkan pertanyaan (atau ketik 'selesai' untuk berhenti): ")
+        if pertanyaan.lower() == "selesai":
+            break
+        jawaban = input("Masukkan jawaban benar: ")
+        questions.append({"Pertanyaan": pertanyaan, "Jawaban": jawaban})
+
+    if questions:
+        quizzes[pilih]["Questions"] = questions
+
     save_data(QUIZ_FILE, quizzes)
     print("✅ Quiz berhasil diupdate!\n")
 
+#HAPUS QUIZ
 def hapus_quiz():
     quizzes = load_data(QUIZ_FILE, [])
     if not quizzes:
         print("Belum ada quiz.")
         return
 
+    print("\n=== Daftar Quiz ===")
     for i, q in enumerate(quizzes, start=1):
-        print(f"{i}. {q['id']} - {q['pertanyaan']}")
+        print(f"{i}. {q['Id']} - {q['Judul']}")
     pilih = int(input("Pilih quiz yang ingin dihapus: ")) - 1
 
     hapus = quizzes.pop(pilih)
     save_data(QUIZ_FILE, quizzes)
-    print(f"🗑️ Quiz '{hapus['id']}' berhasil dihapus.\n")
+    print(f"🗑️ Quiz '{hapus['Id']}' berhasil dihapus.\n")
 
-
-# Fungsi untuk kelola CONTEST
+#BUAT CONTEST
 def buat_contest():
     contests = load_data(CONTEST_FILE, [])
     quizzes = load_data(QUIZ_FILE, [])
@@ -61,17 +92,40 @@ def buat_contest():
         return
 
     nama = input("Masukkan nama contest: ")
+
+    # Input jumlah quiz yang ingin dimasukkan
+    while True:
+        try:
+            jumlah = int(input("Berapa banyak quiz yang ingin dimasukkan ke contest ini? "))
+            if jumlah <= 0 or jumlah > len(quizzes):
+                print(f"Jumlah harus antara 1 sampai {len(quizzes)}.")
+            else:
+                break
+        except ValueError:
+            print("Masukkan angka yang valid!")
+
     print("\nPilih quiz yang akan dimasukkan:")
     for i, q in enumerate(quizzes, start=1):
-        print(f"{i}. {q['id']} - {q['pertanyaan']}")
+        print(f"{i}. {q['Id']} - {q['Judul']}")
 
-    pilih = input("Masukkan nomor quiz (pisahkan dengan koma, contoh: 1,3,5): ")
-    ids = [quizzes[int(i.strip()) - 1]["id"] for i in pilih.split(",")]
+    ids = []
+    for n in range(jumlah):
+        while True:
+            try:
+                pilih = int(input(f"Pilih quiz ke-{n+1}: ")) - 1
+                if pilih < 0 or pilih >= len(quizzes):
+                    print("Nomor quiz tidak valid!")
+                else:
+                    ids.append(quizzes[pilih]["Id"])
+                    break
+            except ValueError:
+                print("Masukkan angka yang valid!")
 
-    contests.append({"nama": nama, "quiz_ids": ids})
+    contests.append({"Nama": nama, "Quiz_Ids": ids})
     save_data(CONTEST_FILE, contests)
     print("✅ Contest berhasil dibuat!\n")
 
+#LIHAT CONTEST
 def lihat_contest():
     contests = load_data(CONTEST_FILE, [])
     if not contests:
@@ -80,10 +134,14 @@ def lihat_contest():
 
     print("\n=== Daftar Contest ===")
     for i, c in enumerate(contests, start=1):
-        print(f"{i}. {c['nama']} → Quiz: {', '.join(c['quiz_ids'])}")
+        teks_quiz = ""
+        for qid in c["Quiz_Ids"]:
+            teks_quiz += qid + ", "
+        teks_quiz = teks_quiz[:-2]  # hapus koma terakhir
+        print(f"{i}. {c['Nama']} → Quiz: {teks_quiz}")
     print()
 
-# Menu Admin
+#MENU ADMIN
 def admin_menu():
     while True:
         print("""
