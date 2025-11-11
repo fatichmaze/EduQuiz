@@ -15,6 +15,9 @@ Aplikasi ini berisi latihan soal interaktif seputar **Matematika, Fisika, Kimia,
   - `re`
   - `google-generativeai`
   - `python-dotenv`
+  - **API Key Google Gemini** (untuk fitur Chatbot)  
+  > Chatbot Quizzy memerlukan API Key dari Google Gemini.  
+  > Pastikan sudah mendaftar dan menyiapkan key sebelum menggunakan fitur Chatbot.
 
 ---
 
