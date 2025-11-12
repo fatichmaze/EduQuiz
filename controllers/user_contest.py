@@ -1,4 +1,8 @@
-from utils import load_data, save_data, CONTEST_FILE, QUIZ_FILE, LEADERBOARD_FILE, HISTORY_FILE
+from utils import load_data, save_data, CONTEST_FILE, QUIZ_FILE
+from quiz_project import quiz_saintek
+import os
+from history import HISTORY_FILE
+from leaderboard import LEADERBOARD_FILE
 
 def enter_contest(username):
     contests = load_data(CONTEST_FILE, [])

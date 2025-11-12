@@ -4,5 +4,89 @@
         "timestamp": "2025-11-10 20:05:35",
         "activity": "Menyelesaikan Quiz Fisika",
         "details": "Skor: 5/10 (50.0%)"
+    },
+    {
+        "username": "gile",
+        "activity": "Latihan Soal",
+        "timestamp": "2025-11-11 23:00:14",
+        "details": "Fisika (Mudah) - Skor: 6/20"
+    },
+    {
+        "username": "gile",
+        "activity": "Latihan Soal",
+        "timestamp": "2025-11-11 23:03:27",
+        "details": "Fisika (Mudah) - Skor: 6/20"
+    },
+    {
+        "username": "waras",
+        "timestamp": "2025-11-11 23:12:03",
+        "activity": "Menyelesaikan Quiz Fisika",
+        "details": "Skor: 5/10 (50.0%)"
+    },
+    {
+        "username": "gile",
+        "timestamp": "2025-11-11 23:13:06",
+        "activity": "Menyelesaikan Quiz Fisika",
+        "details": "Skor: 5/10 (50.0%)"
+    },
+    {
+        "username": "waras",
+        "timestamp": "2025-11-11 23:14:42",
+        "activity": "Menyelesaikan Quiz Kimia",
+        "details": "Skor: 2/10 (20.0%)"
+    },
+    {
+        "username": "waras",
+        "timestamp": "2025-11-11 23:14:53",
+        "activity": "Menyelesaikan Quiz Biologi",
+        "details": "Skor: 4/10 (40.0%)"
+    },
+    {
+        "username": "waras",
+        "timestamp": "2025-11-11 23:15:03",
+        "activity": "Menyelesaikan Quiz Matematika",
+        "details": "Skor: 0/10 (0.0%)"
+    },
+    {
+        "username": "waras",
+        "activity": "Latihan Soal",
+        "timestamp": "2025-11-11 23:15:23",
+        "details": "Fisika (Mudah) - Skor: 6/20"
+    },
+    {
+        "username": "gile",
+        "timestamp": "2025-11-11 23:15:57",
+        "activity": "Menyelesaikan Quiz Fisika",
+        "details": "Skor: 5/10 (50.0%)"
+    },
+    {
+        "username": "waras",
+        "timestamp": "2025-11-11 23:19:46",
+        "activity": "Menyelesaikan Quiz Fisika",
+        "details": "Skor: 5/10 (50.0%)"
+    },
+    {
+        "username": "gile",
+        "timestamp": "2025-11-11 23:23:48",
+        "activity": "Menyelesaikan Quiz Fisika",
+        "details": "Skor: 5/10 (50.0%)"
+    },
+    {
+        "username": "waras",
+        "timestamp": "2025-11-11 23:28:56",
+        "activity": "Menyelesaikan Quiz Fisika",
+        "details": "Skor: 5/10 (50.0%)"
+    },
+    {
+        "username": "waras",
+        "timestamp": "2025-11-11 23:29:47",
+        "activity": "Menyelesaikan Quiz Kimia",
+        "details": "Skor: 2/10 (20.0%)"
+    },
+    {
+        "username": "gile",
+        "timestamp": "2025-11-11 23:30:33",
+        "activity": "Menyelesaikan Quiz Fisika",
+        "details": "Skor: 5/10 (50.0%)"
     }
 ]

@@ -4,11 +4,18 @@ from colorama import Fore, Style, init
 from quiz_saintek import jalankan_quiz
 from chat_bot.chatbot_quizzy import run_chatbot
 from dotenv import load_dotenv
+from latihan_soal import latsol
+from leaderboard import tampilkan_leaderboard, simpan_skor
 
+# ---------------- INISIALISASI ----------------
 load_dotenv()
-print("🔑 API_KEY:", os.getenv("API_KEY"))
-
 init(autoreset=True)
+
+# Periksa API Key (tanpa menampilkan nilainya)
+if os.getenv("API_KEY"):
+    print("🔑 API Key berhasil dimuat.")
+else:
+    print("⚠️ API Key tidak ditemukan. Pastikan file .env sudah benar.")
 
 # ---------------- UTILITAS JSON ----------------
 def load_json(filename):
@@ -111,16 +118,18 @@ def show_history(username):
 # ---------------- MENU UTAMA ----------------
 def menu_utama(username):
     while True:
-        os.system("cls" if os.name == "nt" else "clear")
+        clear()
         print(f"=== MENU UTAMA (User: {username}) ===")
         print("1. Quiz Saintek")
-        print("2. History")
-        print("3. Chatbot AI")
+        print("2. Latihan Soal")
+        print("3. History")
+        print("4. Chatbot AI")
+        print("5. Leaderboard 🏆")
         print("0. Logout")
         pilihan = input("Pilih menu: ")
 
+        # === MENU QUIZ SAINTEK ===
         if pilihan == "1":
-            # Jalankan quiz
             try:
                 with open("data/soal_saintek.json", "r", encoding="utf-8") as f:
                     semua_soal = json.load(f)
@@ -138,26 +147,53 @@ def menu_utama(username):
 
             if pilih == "0":
                 continue
+
             if pilih.isdigit() and 1 <= int(pilih) <= len(mapel_list):
-                mapel = mapel_list[int(pilih)-1]
-                jalankan_quiz(mapel, username, lambda a,d: add_history(username,a,d))
+                mapel = mapel_list[int(pilih) - 1]
+                score = jalankan_quiz(mapel, username, lambda a, d: add_history(username, a, d))
+
+                if isinstance(score, (int, float)) and score >= 0:
+                    simpan_skor(username, score)
+                else:
+                    print(Fore.YELLOW + "⚠️ Skor tidak valid, tidak disimpan ke leaderboard.")
+                    time.sleep(1)
             else:
                 print("Pilihan tidak valid.")
                 input("Tekan Enter untuk lanjut...")
 
+        # === MENU LATIHAN SOAL ===
         elif pilihan == "2":
+            try:
+                latsol(username)
+            except Exception as e:
+                print(Fore.RED + f"Terjadi kesalahan: {e}")
+                input("Tekan Enter untuk lanjut...")
+
+        # === MENU HISTORY ===
+        elif pilihan == "3":
             show_history(username)
 
-        elif pilihan == "3":
-            run_chatbot(username)  # 💬 Jalankan chatbot Quizzy
+        # === MENU CHATBOT ===
+        elif pilihan == "4":
+            try:
+                run_chatbot(username)
+            except Exception as e:
+                print(Fore.RED + f"Terjadi kesalahan saat menjalankan chatbot: {e}")
+                input("Tekan Enter untuk lanjut...")
 
+        # === MENU LEADERBOARD ===
+        elif pilihan == "5":
+            tampilkan_leaderboard()
+
+        # === LOGOUT ===
         elif pilihan == "0":
-            print("👋 Logout berhasil.")
+            print(Fore.YELLOW + f"👋 Logout berhasil. Sampai jumpa, {username}!")
+            time.sleep(1.5)
             break
 
         else:
-            print("Pilihan tidak valid.")
-            input("Tekan Enter untuk lanjut...")
+            print(Fore.RED + "Pilihan tidak valid!")
+            time.sleep(1)
 
 # ---------------- MAIN PROGRAM ----------------
 def main():

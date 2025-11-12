@@ -18,7 +18,7 @@ def jalankan_quiz(mapel, username, history_callback):
     if not soal_list:
         print("Belum ada soal untuk mapel ini.")
         input("Tekan Enter untuk kembali...")
-        return
+        return 0  # <-- kembalikan 0 kalau tidak ada soal
 
     skor = 0
     for i, s in enumerate(soal_list, start=1):
@@ -40,4 +40,7 @@ def jalankan_quiz(mapel, username, history_callback):
 
     # Simpan ke history
     history_callback(f"Menyelesaikan Quiz {mapel}", f"Skor: {skor}/{total} ({persen:.1f}%)")
+
     input("\nTekan Enter untuk kembali ke menu utama...")
+
+    return skor  # ✅ inilah bagian penting yang sebelumnya hilang!
